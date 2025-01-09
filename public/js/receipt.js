@@ -94,7 +94,7 @@ function displayData(data) {
                 </div>
                 <div class="flex justify-between items-center">
                     <span class="text-gray-600 dark:text-gray-400">${isIncome ? 'Tipe Pemasukan' : 'Nama Pengambil'}</span>
-                    <span class="text-gray-800 dark:text-white font-medium">${data.name}</span>
+                    <span class="text-gray-800 dark:text-white font-medium">${isIncome ? data.category : data.name}</span>
                 </div>
                 <div class="flex justify-between items-center">
                     <span class="text-gray-600 dark:text-gray-400">Jumlah</span>
