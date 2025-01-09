@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../src/styles/custom.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body class="text-white overflow-hidden">
+    <div class="items-center justify-center h-screen bg-gray-900 bg-opacity-75 z-50 absolute w-full hidden" id="loading-screen">
+        <div class="flex flex-col items-center justify-center h-screen w-full">
+          <!-- Spinner -->
+          <div class="w-12 h-12 border-4 border-t-transparent border-gray-500 rounded-full animate-spin"></div>
+          <!-- Loading Text -->
+          <p class="mt-4 text-base font-medium text-white">Loading...</p>
+        </div>
+    </div>
+    <div class="flex flex-col h-screen w-full sm:justify-center items-center sm:p-0 py-12 px-12">
+        <form class="flex flex-col bg-gray-900 p-5 rounded-xl shadow-2xl w-80">
+            <h2 class="text-2xl font-extrabold text-center mb-8" id="form">nabung.</h2>
+            <span class="text-center mb-2 rounded-md  text-red-300 hidden" id="errorMessage"></span>
+            <input class="h-12 text-center text-xl rounded-lg bg-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-400 mb-3" id="inputId" type="text">
+            <input class="h-12 text-center text-xl rounded-lg bg-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-400" id="inputPass" type="password">
+            <button class="relative overflow-hidden bg-gray-200 mt-12 p-2 rounded-full text-gray-900 font-bold text-lg focus:outline-none transition duration-0 hover:duration-150 ease-in-out active:scale-95 hover:bg-white active:bg-gray-500" id="submitButton">MASUK</button>
+        </form>
+    </div>
+    <ul class="background">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <script type="module" src="../src/scripts/index.js" defer ></script>
+    <script type="module" src="../src/scripts/function.js"></script>
+</body>
+</html>

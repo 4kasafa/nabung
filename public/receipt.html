@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bukti Transaksi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: #f3f4f6;
+        }
+
+        /* Container utama */
+        .page-container {
+            min-height: 100vh;
+            padding: 1rem;
+            padding-bottom: 80px; /* Untuk memberikan ruang untuk tombol fixed bottom */
+            box-sizing: border-box;
+        }
+
+        /* Container receipt */
+        .receipt-container {
+            background: white;
+            width: 100%;
+            margin: 0 auto;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Media query untuk desktop */
+        @media (min-width: 480px) {
+            .receipt-container {
+                max-width: 400px;
+            }
+        }
+        
+        /* Bottom bar */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            background: white;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Tombol */
+        .btn-action {
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-action:active {
+            transform: scale(0.95);
+        }
+
+        /* Dark mode */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #111827;
+            }
+            .receipt-container {
+                background: #1f2937;
+            }
+            .bottom-bar {
+                background: #1f2937;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <!-- 404 Section -->
+        <div id="not-found" class="hidden receipt-container p-6 text-center bg-gray-50 dark:bg-gray-700/50 rounded-lg shadow-md">
+            <div class="mb-4">
+                <div class="inline-block py-3 px-4 rounded-full bg-red-100 dark:bg-red-900">
+                    <i class="fas fa-exclamation-circle text-3xl text-red-500 dark:text-red-400"></i>
+                </div>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">404 Not Found!</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-4">Data yang Anda cari tidak tersedia. Silakan periksa kembali atau coba beberapa saat lagi.</p>
+            <button id="retryButton" class="btn-action py-3 px-6 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-medium">
+                <i class="fas fa-redo-alt mr-2"></i>
+                Coba Lagi
+            </button>
+        </div>        
+        <!-- Container untuk screenshot -->
+        <div id="receipt-container" class="hidden receipt-container">
+            <!-- Header -->
+            <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="flex items-center">
+                        <span class="ml-2 text-xl font-bold text-gray-800 dark:text-white">nabung.</span>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="inline-block py-3 px-4 rounded-full bg-green-100 dark:bg-blue-900 mb-2">
+                        <i class="fas fa-check text-2xl text-blue-500 dark:text-blue-400"></i>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-1">Transaksi Berhasil</h2>
+                    <p class="text-sm text-gray-500 dark:text-gray-400" id="tanggalTransaksi"></p>
+                </div>
+            </div>
+
+            <!-- Detail Transaksi -->
+            <div id="transactionDetail" class="p-6 space-y-4">
+                
+            </div>
+
+            <!-- Footer -->
+            <div class="p-6 bg-gray-50 dark:bg-gray-700/50 text-center">
+                <p class="text-sm text-gray-500 dark:text-gray-400">
+                    Receipt transaksi aplikasi nabung. /tabungan-dus-prapatan.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tombol Aksi -->
+    <div id="bottom-container" class="hidden bottom-bar">
+        <div class="flex flex-col space-y-4 max-w-md mx-auto">
+            <!-- Baris atas: Tombol Bagikan dan Unduh -->
+            <div class="flex justify-center space-x-4">
+                <button id="shareButton" class="btn-action flex-1 py-3 px-4 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white font-medium hover:bg-gray-300 dark:hover:bg-gray-600">
+                    <i class="fas fa-share-alt mr-2"></i>
+                    Bagikan
+                </button>
+                <button id="downloadButton" class="btn-action flex-1 py-3 px-4 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white font-medium hover:bg-gray-300 dark:hover:bg-gray-600">
+                    <i class="fas fa-download mr-2"></i>
+                    Unduh
+                </button>
+            </div>
+            <!-- Tombol Selesai -->
+            <a href="index.html" class="btn-action py-3 text-center px-4 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-medium">
+                Selesai
+            </a>
+        </div>
+    </div>
+    <!-- loading screen -->
+    <div id="loading-screen" class="fixed inset-0 hidden items-center justify-center bg-white bg-opacity-75 dark:bg-gray-900 dark:bg-opacity-75 z-50">
+        <!-- Font Awesome Spinner -->
+        <i class="fas fa-spinner fa-spin text-blue-500 text-5xl"></i>
+    </div>
+    <!-- Script -->
+    <script type="module" src="js/receipt.js" defer></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+
+        // Fungsi untuk mengambil screenshot
+        async function captureReceipt() {
+            const receipt = document.getElementById('receipt-container');
+            try {
+                const canvas = await html2canvas(receipt, {
+                    backgroundColor: null,
+                    scale: 2, // Meningkatkan kualitas gambar
+                    logging: false,
+                    useCORS: true
+                });
+                return canvas;
+            } catch (error) {
+                console.error('Error capturing receipt:', error);
+                return null;
+            }
+        }
+
+        // Fungsi untuk berbagi
+        async function shareReceipt() {
+            try {
+                const canvas = await captureReceipt();
+                if (!canvas) return;
+
+                canvas.toBlob(async (blob) => {
+                    const file = new File([blob], 'bukti-transaksi.png', { type: 'image/png' });
+                    
+                    // Menggunakan Web Share API
+                    if (navigator.share) {
+                        try {
+                            await navigator.share({
+                                files: [file],
+                                title: 'Bukti Transaksi nabung.',
+                                text: 'Bukti transaksi dari aplikasi nabung.'
+                            });
+                        } catch (error) {
+                            if (error.name !== 'AbortError') {
+                                console.error('Error sharing:', error);
+                                alert('Gagal membagikan bukti transaksi');
+                            }
+                        }
+                    } else {
+                        // Fallback untuk browser yang tidak mendukung Web Share API
+                        const shareUrl = canvas.toDataURL('image/png');
+                        const a = document.createElement('a');
+                        a.href = shareUrl;
+                        a.download = 'bukti-transaksi.png';
+                        a.click();
+                    }
+                }, 'image/png');
+            } catch (error) {
+                console.error('Error in shareReceipt:', error);
+                alert('Gagal membagikan bukti transaksi');
+            }
+        }
+
+        // Fungsi untuk mengunduh
+        async function downloadReceipt() {
+            try {
+                const canvas = await captureReceipt();
+                if (!canvas) return;
+
+                const a = document.createElement('a');
+                a.href = canvas.toDataURL('image/png');
+                a.download = 'bukti-transaksi.png';
+                a.click();
+            } catch (error) {
+                console.error('Error downloading receipt:', error);
+                alert('Gagal mengunduh bukti transaksi');
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('shareButton').addEventListener('click', shareReceipt);
+            document.getElementById('downloadButton').addEventListener('click', downloadReceipt);
+        });
+    </script>
+    <script type="module" src="js/receipt.js"></script>
+</body>
+</html> 

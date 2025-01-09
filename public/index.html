@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="manifest.json">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 dark:bg-gray-900">
+    <div class="flex h-screen">
+        <!-- Sidebar untuk desktop -->
+        <aside id="menu" class="hidden md:flex flex-col w-64 md:z-0 z-20 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700">
+            <div class="flex flex-col flex-1 p-4 h-screen">
+                <!-- Logo -->
+                <div class="flex justify-between mb-8">
+                    <!--img src="logo.png" alt="Logo" class="h-8 w-8"-->
+                    <span class="ml-3 text-xl font-bold text-gray-800 dark:text-white">Menu</span>
+                    <a href="#" id="close" class=" text-red-700 dark:text-red-400 text-2xl md:hidden">
+                        <i class="fas fa-times w-6"></i>
+                    </a>
+                </div>
+
+                <!-- Menu Atas -->
+                <nav class="space-y-2 md:mb-0 mb-64">
+                    <a class="flex items-center p-3 text-gray-700 dark:text-gray-200 rounded-lg bg-blue-100 dark:bg-blue-900">
+                        <i class="fas fa-home w-6"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="members.html" class="flex items-center p-3 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900">
+                        <i class="fas fa-users w-6"></i>
+                        <span>Anggota</span>
+                    </a>
+                    <a href="history.html" class="flex items-center p-3 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-100 hover:dark:bg-blue-900">
+                        <i class="fas fa-clock w-6"></i>
+                        <span>Riwayat</span>
+                    </a>
+                    <a href="withdraw.html" class="flex items-center p-3 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900">
+                        <i class="fas fa-hand-holding-usd w-6"></i>
+                        <span>Ambil</span>
+                    </a>
+                    <a href="bagi.html" class="flex items-center p-3 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900">
+                        <i class="fas fa-balance-scale w-6"></i>
+                        <span>Bagi</span>
+                    </a>
+                    <a id="goalBtn" class="flex items-center p-3 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900">
+                        <i class="fas fa-chart-line w-6"></i>
+                        <span>Setel Target</span>
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Konten Utama -->
+        <main class="flex-1 no-scrollbar">
+            <div class="p-6 pb-32 md:pb-0">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-6">
+                    <div class="flex flex-col">
+                        <h1 class="text-2xl font-bold text-gray-800 dark:text-white">nabung.</h1>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">Aplikasi tabungan dus prapatan</p>
+                    </div>
+                    <button id="installButton" class="px-3 py-2 mr-4 rounded-lg bg-blue-500 hover:bg-blue-600 text-white hidden">
+                        <i class="fas fa-download mr-2"></i>
+                        <span>Download</span>
+                    </button>
+                    <!--button id="darkModeToggle" class="px-3 py-2 rounded-lg bg-gray-200 dark:bg-gray-700">
+                        <i class="fas fa-sun dark:text-white"></i>
+                    </button-->
+                </div>
+
+                <!-- Kartu Statistik -->
+                <div class="grid grid-cols-2 grid-rows-2 lg:grid-rows-1 lg:grid-cols-3 gap-6 mb-6">
+                    <div class="bg-white dark:bg-gray-800 p-10 rounded-lg shadow col-span-2 lg:col-span-1">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Total Saldo</p>
+                                <p id="totalSaldo" class="text-2xl font-bold text-gray-800 dark:text-white"></p>
+                            </div>
+                            <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-full">
+                                <i class="fas fa-money-bill text-blue-500 dark:text-blue-400"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 p-6 sm:p-10 rounded-lg shadow">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400">Pemasukan</p>
+                                <p id="totalIncome" class="text-xl font-bold text-green-600 dark:text-green-400"></p>
+                            </div>
+                            <div class="sm:bg-green-100 sm:dark:bg-green-900 sm:p-3 rounded-full">
+                                <i class="fas fa-arrow-up text-green-500 dark:text-green-400"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 p-6 sm:p-10 rounded-lg shadow">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400">Pengambilan</p>
+                                <p id="totalPengambilan" class="text-xl font-bold text-red-600 dark:text-red-400"></p>
+                            </div>
+                            <div class="sm:bg-red-100 sm:dark:bg-red-900 sm:p-3 rounded-full">
+                                <i class="fas fa-arrow-down text-red-500 dark:text-red-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Target Progress -->
+                <div id="goalCard" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-6 hidden">
+                    <h2 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Target Pencapaian</h2>
+                    <div class="relative pt-1">
+                        <div class="flex mb-2 items-center justify-between">
+                            <div>
+                                <span id="persenNumber" class="text-xs font-semibold inline-block text-blue-600 dark:text-blue-400">
+                                    75% Tercapai
+                                </span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-xs font-semibold inline-block text-blue-600 dark:text-blue-400">
+                                    <span id="goalContent"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-blue-200 dark:bg-blue-900">
+                            <div id="progressBar" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Riwayat Terbaru -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-lg font-semibold text-gray-800 dark:text-white">Riwayat Terbaru</h2>
+                            <a href="history.html" class="text-blue-500 hover:text-blue-600 text-sm">Lihat semua</a>
+                        </div>
+                        <div id="historyContainer" class="space-y-4 overflow-y-auto max-h-32 no-scrollbar">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
+                                        <i class="fas fa-arrow-up text-green-500 dark:text-green-400"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <p class="text-sm font-medium text-gray-900 dark:text-white">Pemasukan</p>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">28 Des 2024</p>
+                                    </div>
+                                </div>
+                                <span class="text-sm font-medium text-green-600 dark:text-green-400">+Rp 231.000</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
+                                        <i class="fas fa-arrow-up text-green-500 dark:text-green-400"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <p class="text-sm font-medium text-gray-900 dark:text-white">Pemasukan</p>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">20 Des 2024</p>
+                                    </div>
+                                </div>
+                                <span class="text-sm font-medium text-green-600 dark:text-green-400">+Rp 231.000</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="bg-green-100 dark:bg-green-900 p-3 rounded-full">
+                                        <i class="fas fa-arrow-up text-green-500 dark:text-green-400"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <p class="text-sm font-medium text-gray-900 dark:text-white">Pemasukan</p>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">28 Des 2024</p>
+                                    </div>
+                                </div>
+                                <span class="text-sm font-medium text-green-600 dark:text-green-400">+Rp 1.000.000</span>
+                            </div>
+                            <!-- Tambahkan riwayat lainnya di sini -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Tombol Tambah untuk Desktop -->
+        <div class="hidden md:block fixed bottom-10 right-10">
+            <a href="input.html" class="bg-blue-500 hover:bg-blue-600 text-white py-4 px-4 rounded-full shadow-lg transition-all duration-300 active:scale-95">
+                <i class="fas fa-plus text-xl"></i>
+            </a>
+        </div>
+
+        <!-- Bottom Navigation untuk Mobile -->
+        <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div class="relative">
+                <a href="input.html" class="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-3 rounded-full shadow-lg transition-all duration-300 active:scale-95">
+                    <i class="fas fa-plus text-xl"></i>
+                </a>
+            </div>
+            <div class="flex justify-around p-4">
+                <a href="withdraw.html" class="text-gray-500 text-center dark:text-gray-400">
+                    <i class="fas fa-hand-holding-usd text-xl"></i>
+                    <p class="text-xs mt-1">Ambil</p>
+                </a>
+                <a href="members.html" class="text-gray-500 text-center dark:text-gray-400">
+                    <i class="fas fa-users text-xl"></i>
+                    <p class="text-xs mt-1">Anggota</p>
+                </a>
+                <a href="bagi.html" class="text-gray-500 dark:text-gray-400 text-center">
+                    <i class="fas fa-balance-scale text-xl"></i>
+                    <p class="text-xs mt-1">Bagi</p>
+                </a>
+                <a href="#" id="burger" class="text-gray-500 text-center dark:text-gray-400">
+                    <i id="burgerIcon" class="fas fa-bars text-xl"></i>
+                    <i id="closeIcon" class="fas fa-times text-xl hidden"></i>
+                    <p class="text-xs mt-1">Menu</p>
+                </a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Popup Setel Target -->
+    <div id="targetPopup" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-[90%] sm:w-[50%]">
+            <h2 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Setel Target</h2>
+            <div class="relative mb-4">
+                <span class="absolute left-3 top-3 text-gray-500 dark:text-gray-400">Rp</span>
+                <input type="text" inputmode="numeric" id="goalInput" placeholder="Masukkan target"
+                    class="w-full p-3 pl-12 rounded-lg border border-gray-300 dark:border-gray-600 
+                           bg-white dark:bg-gray-700 text-gray-900 dark:text-white
+                           focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    required>
+            </div>
+            <div class="flex justify-end">
+                 <button id="closeGoalPopup" class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600
+                 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Batal</button>
+                 <button id="saveGoalBtn" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg ml-2">Simpan</button>
+            </div>
+        </div>
+    </div>
+    <!-- loading screen -->
+    <div id="loading-screen" class="fixed inset-0 hidden items-center justify-center bg-white bg-opacity-75 dark:bg-gray-900 dark:bg-opacity-75 z-50">
+        <!-- Font Awesome Spinner -->
+        <i class="fas fa-spinner fa-spin text-blue-500 text-5xl"></i>
+    </div>    
+    
+    <script type="module" src="js/pwa.js" defer></script>
+    <script type="module" src="js/functions.js" defer></script>
+    <script type="module" src="js/index.js" defer></script>
+    <script type="module" src="js/firebase.js"></script>
+</body>
+</html>
