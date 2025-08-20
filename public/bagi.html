@@ -66,7 +66,7 @@
             </div>
 
             <!-- Tabel Pembagian -->
-            <div class="bg-white dark:bg-gray-800 p-4 md:p-6 rounded-lg shadow">
+            <div class="bg-white dark:bg-gray-800 p-4 md:p-6 rounded-lg shadow receipt-container">
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm md:text-base text-left table-auto border-collapse">
                         <thead>
@@ -87,8 +87,8 @@
 
             <!-- Action Buttons -->
             <div class="flex flex-col md:flex-row gap-4 justify-end">
-                <button class="w-full md:w-auto px-6 py-3 rounded-lg bg-blue-500 text-white hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">Save</button>
-                <button class="w-full md:w-auto px-6 py-3 rounded-lg bg-green-500 text-white hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700">Share</button>
+                <button id="downloadButton" class="w-full md:w-auto px-6 py-3 rounded-lg bg-blue-500 text-white hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">Save</button>
+                <button id="shareButton" class="w-full md:w-auto px-6 py-3 rounded-lg bg-green-500 text-white hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700">Share</button>
             </div>
         </main>
     </div>
@@ -98,5 +98,85 @@
         <i class="fas fa-spinner fa-spin text-blue-500 text-5xl"></i>
     </div>
     <script type="module" src="js/bagi.js" defer></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+
+        // Fungsi untuk mengambil screenshot
+        async function captureReceipt() {
+            const receipt = document.getElementById('receipt-container');
+            try {
+                const canvas = await html2canvas(receipt, {
+                    backgroundColor: null,
+                    scale: 2, // Meningkatkan kualitas gambar
+                    logging: false,
+                    useCORS: true
+                });
+                return canvas;
+            } catch (error) {
+                console.error('Error capturing receipt:', error);
+                return null;
+            }
+        }
+
+        // Fungsi untuk berbagi
+        async function shareReceipt() {
+            try {
+                const canvas = await captureReceipt();
+                if (!canvas) return;
+
+                canvas.toBlob(async (blob) => {
+                    const file = new File([blob], 'bukti-transaksi.png', { type: 'image/png' });
+                    
+                    // Menggunakan Web Share API
+                    if (navigator.share) {
+                        try {
+                            await navigator.share({
+                                files: [file],
+                                title: 'Bukti Transaksi nabung.',
+                                text: 'Bukti transaksi dari aplikasi nabung.'
+                            });
+                        } catch (error) {
+                            if (error.name !== 'AbortError') {
+                                console.error('Error sharing:', error);
+                                alert('Gagal membagikan bukti transaksi');
+                            }
+                        }
+                    } else {
+                        // Fallback untuk browser yang tidak mendukung Web Share API
+                        const shareUrl = canvas.toDataURL('image/png');
+                        const a = document.createElement('a');
+                        a.href = shareUrl;
+                        a.download = 'bukti-transaksi.png';
+                        a.click();
+                    }
+                }, 'image/png');
+            } catch (error) {
+                console.error('Error in shareReceipt:', error);
+                alert('Gagal membagikan bukti transaksi');
+            }
+        }
+
+        // Fungsi untuk mengunduh
+        async function downloadReceipt() {
+            try {
+                const canvas = await captureReceipt();
+                if (!canvas) return;
+
+                const a = document.createElement('a');
+                a.href = canvas.toDataURL('image/png');
+                a.download = 'bukti-transaksi.png';
+                a.click();
+            } catch (error) {
+                console.error('Error downloading receipt:', error);
+                alert('Gagal mengunduh bukti transaksi');
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('shareButton').addEventListener('click', shareReceipt);
+            document.getElementById('downloadButton').addEventListener('click', downloadReceipt);
+        });
+    </script>
 </body>
 </html>
