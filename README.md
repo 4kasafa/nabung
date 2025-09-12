@@ -30,5 +30,3 @@ Dengan berbasis **PWA**, aplikasi bisa dipasang langsung di smartphone dan digun
 
 ---
 
-## 📂 Struktur Proyek
-
