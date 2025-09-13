@@ -15,7 +15,7 @@
       <h1 class="text-xl font-bold "><i class="fa-solid fa-box"></i> Dus Nabung</h1>
       <nav class="space-x-4">
         <a href="index.html" class="text-gray-300 hover: transition"><i class="fa-solid fa-house"></i> Home</a>
-        <a href="about.html" class=" font-semibold"><i class="fa-solid fa-circle-info"></i> About</a>
+        <!--a href="about.html" class=" font-semibold"><i class="fa-solid fa-circle-info"></i> About</a-->
       </nav>
     </div>
   </header>
@@ -73,5 +73,25 @@
       © 2025 Dus Nabung. Made with ♥ By Kasafa.
     </div>
   </footer>
+  <!-- loading screen -->
+    <div id="loading-screen" class="fixed inset-0 hidden items-center justify-center bg-white bg-opacity-75 dark:bg-gray-900 dark:bg-opacity-75 z-50">
+        <!-- Font Awesome Spinner -->
+        <i class="fas fa-spinner fa-spin text-blue-500 text-5xl"></i>
+    </div>
 </body>
+
+<script>
+    // Show loading screen on page load
+    document.addEventListener("DOMContentLoaded", function() {
+        const loadingScreen = document.getElementById('loading-screen');
+        loadingScreen.classList.remove('hidden');
+        loadingScreen.classList.add('flex');
+
+        // Simulate loading time (e.g., fetching data)
+        setTimeout(() => {
+            loadingScreen.classList.add('hidden');
+        }, 1000); // Adjust time as needed
+    });
+</script>
+
 </html>
