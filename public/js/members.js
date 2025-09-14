@@ -37,12 +37,22 @@ function toggleMemberModal() {
 dom.memberBtn.addEventListener('click', toggleMemberModal);
 dom.batalBtn.addEventListener('click', toggleMemberModal);
 
-function toggleEditModal() {
-    dom.editModal.classList.toggle('hidden');
-    dom.editModal.classList.toggle('flex');
+//function toggleEditModal() {
+//    dom.editModal.classList.toggle('hidden');
+//    dom.editModal.classList.toggle('flex');
+//    console.log('toggled');
+//}
+
+function openEditModal() {
+  dom.editModal.classList.remove('hidden');
+  dom.editModal.classList.add('flex');
 }
 
-dom.batalEditBtn.addEventListener('click', toggleEditModal);
+function closeEditModal() {
+  dom.editModal.classList.remove('flex');
+  dom.editModal.classList.add('hidden');
+}
+
 
 // load member data
 
@@ -157,7 +167,7 @@ dom.membersList.addEventListener('click', async (e) => {
                 dom.editKeterangan.value = member.note;
                 dom.editPengambilan.value = member.pengambilan;
 
-                toggleEditModal(); 
+                openEditModal(); 
             }
 
         } catch (error) {
@@ -166,6 +176,11 @@ dom.membersList.addEventListener('click', async (e) => {
         
     }
 
+});
+
+dom.batalEditBtn.addEventListener('click', function() {
+    closeEditModal();
+    console.log('batal edit clicked');
 });
 
 // delete member
@@ -247,7 +262,7 @@ dom.editForm.addEventListener('submit', async (e) => {
         note: dom.editKeterangan.value,
     });
 
-    toggleEditModal();
+    closeEditModal();
 });
 
 function clearInput() {
