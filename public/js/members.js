@@ -41,7 +41,8 @@ function toggleEditModal() {
     dom.editModal.classList.toggle('hidden');
     dom.editModal.classList.toggle('flex');
 }
-batalEditBtn.addEventListener('click', toggleEditModal);
+
+dom.batalEditBtn.addEventListener('click', toggleEditModal);
 
 // load member data
 
