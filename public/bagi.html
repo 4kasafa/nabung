@@ -51,18 +51,49 @@
             <!-- Form Total Saldo -->
             <div class="bg-white dark:bg-gray-800 p-4 md:p-6 rounded-lg shadow">
                 <h1 class="text-lg md:text-2xl font-bold text-gray-800 dark:text-white mb-4">Pembagian Hasil Keuangan</h1>
+
                 <form class="space-y-4">
-                    <label for="totalSaldo" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Total Saldo</label>
-                    <div class="relative flex space-x-2 mb-4">
-                        <div class="flex-1">
-                            <span class="absolute left-3 top-3 text-gray-500 dark:text-gray-400">Rp</span>
-                            <input type="text" inputmode="numeric" id="saldoInput" class="w-full p-3 pl-12 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
+                        <!-- Pemasukan -->
+                        <div class="relative">
+                        <label for="pemasukan" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Pemasukan</label>
+                        <span class="absolute left-3 top-9 text-gray-500 dark:text-gray-400">Rp</span>
+                        <input type="text" id="pemasukan" inputmode="numeric"
+                            class="w-full p-3 pl-12 rounded-lg border border-gray-300 dark:border-gray-600 
+                            bg-white dark:bg-gray-700 text-gray-900 dark:text-white 
+                            focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
-                        <button id="addKategoriBtn" class="p-3 rounded-lg bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700">
-                            Hitung     
+
+                        <!-- Pengeluaran -->
+                        <div class="relative">
+                        <label for="pengeluaran" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Pengeluaran</label>
+                        <span class="absolute left-3 top-9 text-gray-500 dark:text-gray-400">Rp</span>
+                        <input type="text" id="pengeluaran" inputmode="numeric"
+                            class="w-full p-3 pl-12 rounded-lg border border-gray-300 dark:border-gray-600 
+                            bg-white dark:bg-gray-700 text-gray-900 dark:text-white 
+                            focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+
+                        <!-- Total -->
+                        <div class="relative">
+                        <label for="total" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Total</label>
+                        <span class="absolute left-3 top-9 text-gray-500 dark:text-gray-400">Rp</span>
+                        <input type="text" id="total" inputmode="numeric" readonly
+                            class="w-full p-3 pl-12 rounded-lg border border-gray-300 dark:border-gray-600 
+                            bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white 
+                            focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+
+                        <!-- Tombol Hitung -->
+                        <div class="flex justify-center md:justify-start">
+                        <button type="button" id="hitungBtn"
+                            class="w-full md:w-1/2 p-3 rounded-lg bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700">
+                            Hitung
                         </button>
+                        </div>
                     </div>
                 </form>
+
             </div>
 
             <!-- Tabel Pembagian -->
