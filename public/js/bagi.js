@@ -9,23 +9,28 @@ const initApp = () => {
 
 // DOM elements
 const dom = {
-    saldoInput: getById('saldoInput'),
+    pemasukanInput: getById('pemasukan'),
+    pengeluaranInput: getById('pengeluaran'),
+    totalInput: getById('total'),
     tableBody: getById('tableBody'),
-    hitungButton: getById('addKategoriBtn'), // Tombol "Hitung"
+    hitungButton: getById('hitungBtn'), // Tombol "Hitung"
     loadingScreen: getById('loading-screen'),
 };
 
 // Format Rupiah in input
-dom.saldoInput.addEventListener('input', function () {
+dom.pemasukanInput.addEventListener('input', function () {
+    formatRupiah(this);
+});
+dom.pengeluaranInput.addEventListener('input', function () {
     formatRupiah(this);
 });
 
-// Load balance from Firebase
+// Load balance from Firebase (masih bisa dipakai kalau mau isi default)
 function loadBalance() {
     onValue(balanceRef, (snapshot) => {
         const balance = snapshot.val();
         if (snapshot.exists()) {
-            dom.saldoInput.value = balance
+            dom.totalInput.value = formatRupiah2(balance);
         }
     });
 }
@@ -74,12 +79,17 @@ function getAnggotaData() {
 dom.hitungButton.addEventListener('click', function (e) {
     e.preventDefault();
 
-    const totalSaldo = parseFloat(dom.saldoInput.value.replace(/\D/g, ''));
+    const pemasukan = parseFloat(dom.pemasukanInput.value.replace(/\D/g, '')) || 0;
+    const pengeluaran = parseFloat(dom.pengeluaranInput.value.replace(/\D/g, '')) || 0;
+    const totalSaldo = pemasukan - pengeluaran;
+
+    dom.totalInput.value = formatRupiah2(totalSaldo);
+
     const rows = Array.from(dom.tableBody.querySelectorAll('tr'));
     const anggotaData = rows.map((row) => {
         const key = row.dataset.key;
         const percentageInput = row.querySelector('.percentageInput');
-        const percentage = parseFloat(percentageInput.value) || 0; // Ambil persentase dari input
+        const percentage = parseFloat(percentageInput.value) || 0;
         const pengambilan = row.querySelector('.pengambilan').textContent.replace(/\D/g, '') || 0;
 
         return { key, percentage, pengambilan, row };
@@ -116,8 +126,7 @@ const toggleLoading = (isLoading) => {
         dom.loadingScreen.classList.add('hidden');
         dom.loadingScreen.classList.remove('flex');
     }
-}
-
+};
 
 // Initialize app
 initApp();
